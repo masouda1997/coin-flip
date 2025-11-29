@@ -1,0 +1,37 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    background: radial-gradient(circle at center, #202030, #101020);
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.gsapCoin {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    /* background: radial-gradient(circle at 40% 40%, gold, darkgoldenrod); */
+    background: url(../public/head.png);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+    perspective: 800px;
+    transform-style: preserve-3d;
+}
+.gsapCoin:hover {
+    filter: brightness(1.2);
+}
+
+#gsapResult {
+    font-size: 24px;
+    margin-top: 20px;
+    text-align: center ;
+    width: 100vw;
+}
