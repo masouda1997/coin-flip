@@ -3,16 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const result = document.getElementById("gsapResult");
 
   function infiniteBounce() {
-    // از 'bounce.out' برای شبیه‌سازی افتادن و کمی ارتعاش استفاده می‌کنیم
     idleBounceTween = gsap.to(coin, {
       y: coin.offsetTop - 490,
       duration: 1,
       ease: "bounce.out",
-      repeat: -1, // تکرار بی‌پایان
+      repeat: -1,
       yoyo: true, // بازگشت به حالت قبل (بالا و پایین رفتن)
     });
   }
-
   function loadEntranceAnimation() {
     // ۱. تنظیم موقعیت اولیه: خارج از دید از سمت راست
     gsap.set(coin, {
@@ -21,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
       y: 0, // مطمئن می‌شویم در ارتفاع وسط است
     });
 
-    // ۲. انیمیشن حرکت به وسط و قل خوردن
     gsap.to(coin, {
       duration: 2.5,
       x: window.innerWidth / 2 - 64, // مرکز صفحه (نصف عرض سکه ۶۴ پیکسل)
@@ -39,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // اجرای انیمیشن ورود بلافاصله پس از لود شدن محتوا
   loadEntranceAnimation();
 
   function flipCoin() {
@@ -50,48 +46,71 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.set(coin, { y: 0 });
     }
     result.textContent = "";
+    const chance = Math.random();
+    const isTail = chance < 0.5;
 
-    gsap
-      .timeline()
-      .to(coin, {
-        y: -200,
-        rotationY: 720, // چرخش حول محور افقی
-        rotationX: 180, // کمی محور عمودی برای زیبایی
-        duration: 0.8,
-        ease: "power2.out",
-      })
-      .to(coin, {
-        y: 0,
-        rotationY: 1440,
-        rotationX: 360,
-        duration: 1.2,
-        ease: "bounce.out",
-        onComplete: () => {
-          const chance = Math.random();
-          console.log(chance);
-          const outcome =
-            chance < 0.5 ? "🪙 خط اومد باختی" : "🪙   شیر اومد بردی ";
-          if (chance < 0.5) {
-            coin.textContent = "";
-            coin.style.backgroundImage = "url(../public/taile.png)";
-          } else {
-            coin.textContent = "";
-            coin.style.backgroundImage = "url(../public/head.png)";
-          }
-          setTimeout(() => {
-            result.textContent = ` ${outcome}`;
-            gsap.from(result, {
-              scale: 0.5,
-              opacity: 0,
-              duration: 0.4,
-              ease: "back.out(1.7)",
-            });
-            return;
-          }, 400);
-        },
-      });
+    const tl = gsap.timeline({
+      onComplete: () => {
+        const outcome = isTail ? "🪙 خط اومد باختی" : "🪙   شیر اومد بردی ";
+        setTimeout(() => {
+          result.textContent = ` ${outcome}`;
+          gsap.from(result, {
+            scale: 0.5,
+            opacity: 0,
+            duration: 0.4,
+            ease: "back.out(1.7)",
+          });
+          return;
+        }, 400);
+      },
+    });
+
+    tl.to(coin, {
+      y: -200,
+      rotationY: 900,
+      rotationX: 155,
+      duration: 1,
+      ease: "power2.out",
+      onUpdate: () => {
+        const progress = tl.progress();
+        if (
+          (progress >= 0 && progress < 0.05) ||
+          (progress >= 0.1 && progress < 0.15) ||
+          (progress >= 0.2 && progress < 0.25) ||
+          (progress >= 0.3 && progress < 0.55)
+        ) {
+          coin.style.backgroundImage = "url(../public/head.png)";
+        }
+        if (
+          (progress >= 0.05 && progress < 0.1) ||
+          (progress >= 0.15 && progress < 0.2) ||
+          (progress >= 0.25 && progress < 0.3)
+        ) {
+          coin.style.backgroundImage = "url(../public/taile.png)";
+        }
+      },
+    }).to(coin, {
+      y: 0,
+      rotationY: 1440,
+      rotationX: 360,
+      duration: 1,
+      ease: "bounce.out",
+      onUpdate: () => {
+        const progress = tl.progress();
+        console.log(progress);
+        if (progress >= 0.55 && progress < 0.65) {
+          coin.style.backgroundImage = "url(../public/taile.png)";
+        }
+        if (progress >= 0.65 && progress < 0.7) {
+          coin.style.backgroundImage = "url(../public/head.png)";
+        }
+        if (progress >= 0.7) {
+          coin.style.backgroundImage = isTail
+            ? "url(../public/taile.png)"
+            : "url(../public/head.png)";
+        }
+      },
+    });
   }
-
-  // کلیک روی سکه → پرتاب اجرا شود
   coin.addEventListener("click", flipCoin);
 });
