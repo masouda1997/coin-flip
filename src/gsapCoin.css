@@ -1,14 +1,3 @@
-body {
-    font-family: sans-serif;
-    text-align: center;
-    background: radial-gradient(circle at center, #202030, #101020);
-    color: white;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-}
 
 .gsapCoin {
     width: 128px;

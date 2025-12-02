@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "vite": "^7.1.7"
+  },
+  "dependencies": {
+    "spin-wheel-ts": "1.0.0-alpha.7"
   }
 }

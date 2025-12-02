@@ -4,24 +4,43 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=.5" />
+    <link rel="stylesheet" href="/src/style.css">
     <link rel="stylesheet" href="/src/gsapCoin.css" />
+    <link rel="stylesheet" href="/src/chanceWheel.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.0/pixi.min.js"></script>
     <script src="/src/gsapCoin.js" defer></script>
+    <script src="/src/chanseWheel.js" defer></script>
 
     <title>Coin Flip</title>
   </head>
   <body>
-    <!-- <div class="coin" id="coin">🪙</div> -->
-    <!-- <p id="result"></p> -->
-    <!-- <script type="module" src="/src/main.js"></script> -->
-    <div>
-      <p style="margin-bottom: 10rem; font-size: xx-large;">شانستو امتحان کن</p>
-      <div id="gsapCoin" class="gsapCoin">
+
+    <!-- the coin -->
+     <!-- <div>
+        <p style="margin-bottom: 10rem; font-size: xx-large;">شانستو امتحان کن</p>
+        <div id="gsapCoin" class="gsapCoin">
+        </div>
+        <p id="gsapResult"></p>
+     </div> -->
+    <div >
+      <!-- chance wheel -->
+      <h1>چرخ شانس سفارشی (PixiJS + GSAP)</h1>
+      <div id="spinner-container">
+          <!-- نشانگر ثابت که همیشه به سمت بالا است -->
+
+           <img class="rings" src="/public/spinnerCenter.png" alt=" center ">
+           <img class="rings outerShadow" src="/public/middleRing.png" alt=" middle ">
+           <img class="rings innerShadow" src="/public/middleRing.png" alt=" middle ">
+           <img class="rings" src="/public/outerRing.png" alt=" outer ">
+           <!-- <img class="middleRing" src="/public/spinnerCenter.png" alt=" "> -->
+           <div id="pointer">
+            <img src="/public/pionter.png" alt=" pointer">
+          </div>
       </div>
-      <p id="gsapResult"></p>
+      <button id="spinButton">شروع چرخش</button>
+
     </div>
-    <!-- <script type="module" src="/src/coin.js"></script> -->
 
   </body>
 </html>
